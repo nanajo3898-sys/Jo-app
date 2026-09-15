@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "JO Academy"
+description = "منصة تعليمية عربية للثانوية العامة تشمل المواد والدروس والامتحانات الذكية وخطط المذاكرة والمجتمع ولوحة المشرف."
+version = "1.0.0"
+id = "artifacts/jo-academy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18521
+
+[services.development]
+run = "pnpm --filter @workspace/jo-academy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jo-academy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/jo-academy/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18521"
+BASE_PATH = "/"
